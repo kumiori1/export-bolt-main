@@ -35,7 +35,7 @@ async def generate_wan_scene_images_with_fal(nano_banana_prompts: List[str], bas
                     fal_client.submit,
                     "fal-ai/gemini-25-flash-image/edit",
                     arguments={
-                        "prompt": nano_banana_prompt,
+                        "prompt": f"{nano_banana_prompt},Authentic UGC style video, shot on smartphone, natural lighting, a bit shaky, no professional camera look. Please generate a still image with a fixed, locked composition (Static Shot), keeping the main subject perfectly centered. The camera must not move. The image must use a full Vertical 9:16 aspect ratio. The technical quality should be ultra-high fidelity, sharp, and hyper-realistic (8K level). Use soft, consistent natural lighting throughout. Crucially, this image must be completely clean—explicitly exclude all digital noise, grain, blurriness, or visual artifacts. Finally, ensure all anatomy is correct (e.g., no distorted hands or faces).",
                         "image_urls": [base_image_url],
                         "num_images": 1,
                         "output_format": "jpeg",
@@ -187,32 +187,17 @@ async def generate_wan_voiceovers_with_fal(wan_scenes: List[Dict]) -> List[str]:
 
                 # Map voice_id to MiniMax compatible voice names
                 voice_mapping = {
-                    "Wise_Woman": "female-qn-qingse",
-                    "Deep_Voice_Man": "male-qn-jingying", 
-                    "Friendly_Person": "female-qn-qingse",
-                    "Inspirational_girl": "female-qn-qingse",
-                    "Calm_Woman": "female-qn-qingse",
-                    "Casual_Guy": "male-qn-jingying",
-                    "Lively_Girl": "female-qn-qingse",
-                    "Patient_Man": "male-qn-jingying",
-                    "Young_Knight": "male-qn-jingying",
-                    "Determined_Man": "male-qn-jingying",
-                    "Lovely_Girl": "female-qn-qingse",
-                    "Decent_Boy": "male-qn-jingying",
-                    "Imposing_Manner": "male-qn-jingying",
-                    "Elegant_Man": "male-qn-jingying",
-                    "Abbess": "female-qn-qingse",
-                    "Sweet_Girl_2": "female-qn-qingse",
-                    "Exuberant_Girl": "female-qn-qingse"
+                    "Wise_Woman": "Wise_Woman",
+                    "Deep_Voice_Man": "Deep_Voice_Man", 
                 }
                 
                 # Get MiniMax voice name
-                minimax_voice = voice_mapping.get(eleven_labs_voice_id, "female-qn-qingse")
+                minimax_voice = voice_mapping.get(eleven_labs_voice_id, "Wise_Woman")
                 logger.info(f"WAN_VOICEOVER: Scene {i+1} mapped voice {eleven_labs_voice_id} -> {minimax_voice}")
 
                 # Map emotion to MiniMax compatible emotions
                 emotion_mapping = {
-                    "happy": "cheerful",
+                    "happy": "happy",
                     "sad": "sad",
                     "angry": "angry",
                     "fearful": "fearful",
@@ -232,7 +217,7 @@ async def generate_wan_voiceovers_with_fal(wan_scenes: List[Dict]) -> List[str]:
                         "text": voiceover_text,  # Use extracted speech text only
                         "voice_setting": {
                             "voice_id": minimax_voice,
-                            "speed": 1.0,
+                            "speed": 1.2,
                             "vol": 1.0,
                             "pitch": 0,
                             "emotion": minimax_emotion
@@ -371,11 +356,11 @@ async def generate_wan_videos_with_fal(scene_image_urls: List[str], wan2_5_promp
                     fal_client.submit,
                     "fal-ai/wan-25-preview/image-to-video",
                     arguments={
-                        "prompt": wan2_5_prompt,
+                        "prompt": f"{wan2_5_prompt},Engaging, yet natural movement. Subtle camera shifts like organic pans or gentle pushes. Focus on subject's actions with enhanced, but believable energy. Avoid overly cinematic or overly shaky effects. When animating the clean source image, apply the conversion-optimized UGC Low-Fi aesthetic filter. Set the video to achieve a deliberately unpolished, non-cinematic look. Aggressively add High Grain/Noise and enforce Low Contrast, simulating the texture of heavy H.264 social media compression and features mandatory UGC-style captions on screen",
                         "image_url": image_url,
-                        "resolution": "1080p",
+                        "resolution": "480p",
                         "duration": "5",  # 5 seconds per scene
-                        "negative_prompt": "professional filming, cinematic production, color grading, high saturation, soft cinematic focus, perfect lighting, 24fps, ultra smooth movement, stabilized shot, studio setup, uncanny valley, stiff movement, fake hands, deformed, aggressive saleswoman, corporate ad, stock footage, watermark, signature, blurry faces.",
+                        "negative_prompt": "professional filming, cinematic production, color grading, high saturation, soft cinematic focus, perfect lighting, 24fps, ultra smooth movement, stabilized shot, studio setup, uncanny valley, stiff movement, fake hands, deformed, aggressive saleswoman, corporate ad, stock footage, watermark, signature, blurry faces. Short sfx, melody background music, loud sfx, people speaking, unrealistic, unrelated sfx, voiceover, slow movements",
                         "enable_prompt_expansion": True
                     }
                 )
