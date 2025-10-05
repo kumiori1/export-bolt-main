@@ -1,0 +1,28 @@
+FastAPI Video Processing Backend - Complete File Structure
+===========================================================
+
+📁 Root Directory
+├── app/
+│   ├── __init__.py
+│   ├── main.py (FastAPI server with webhook endpoints)
+│   ├── models.py (Pydantic data models)
+│   ├── webhook_handler.py (Webhook processing logic)
+│   ├── worker.py (ARQ background worker)
+│   ├── config.py (Configuration management)
+│   └── supabase_client.py (Database client)
+├── supabase/
+│   └── migrations/
+│       ├── 20250917235833_stark_term.sql (Scenes table)
+│       ├── 20250918002149_royal_peak.sql (Scene clip URLs)
+│       ├── 20250918005045_silent_water.sql (Voiceover URLs)
+│       └── 20250918034219_rough_glade.sql (Music table)
+├── requirements.txt (Python dependencies)
+├── package.json (Node.js dependencies)
+├── .env.example (Environment variable template)
+├── README.md (Complete documentation)
+├── run_server.py (Production server runner)
+├── run_worker.py (Background worker runner)
+├── index.js (Node.js entry point)
+└── view-env-structure.md (Environment setup guide)
+
+Total Files: 16 core files + documentation
